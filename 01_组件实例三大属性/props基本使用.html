@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6.2/prop-types.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+
+    <script type="text/babel">
+        class Person extends React.Component {
+            static propTypes = {
+                name: PropTypes.string.isRequired,
+                sex: PropTypes.string,
+                age: PropTypes.number,
+                speak: PropTypes.func
+            }
+            static defaultProps = {
+                sex: "未知",
+                age: 1
+            }
+            render() {
+                const { name, sex, age } = this.props
+                console.log(this);
+                return (
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>性别：{sex}</li>
+                        <li>年龄：{age + 1}</li>
+                    </ul>
+                )
+            }
+        }
+
+        function Student(props) {
+            const { name, sex, age } = props
+            return (
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>性别：{sex}</li>
+                    <li>年龄：{age}</li>
+                </ul>
+            )
+        }
+
+        Student.propTypes = {
+            name: PropTypes.string.isRequired,
+            sex: PropTypes.string,
+            age: PropTypes.number,
+        }
+
+        const p = { name: "Jerry", age: 18, sex: "男" }
+        ReactDOM.render(<Person name={"Tom"} age={18} speak={speak} />, document.getElementById('app'))
+        ReactDOM.render(<Person name="Merry" sex="女" />, document.getElementById('test'))
+        ReactDOM.render(<Person {...p} />, document.getElementById('test1'))
+        ReactDOM.render(<Student name="小明" sex="男" age={18} />, document.getElementById('test2'))
+
+        function speak() {
+            console.log("我说话了");
+        }
+    </script>
+</body>
+
+</html>

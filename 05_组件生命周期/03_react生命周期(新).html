@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class Count extends React.Component {
+            constructor(props) {
+                console.log("props-constructor");
+                super(props)
+                this.state = { count: 0 }
+            }
+
+            // state = { count: 0 }
+
+            add = () => {
+                const { count } = this.state
+                this.setState({ count: count + 1 })
+            }
+
+            // 卸载组件按钮的回调
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('app'))
+            }
+
+            // 组件强制更新按钮的回调
+            force = () => {
+                this.forceUpdate()
+            }
+
+            static getDerivedStateFromProps(props, state) {
+                console.log("Count---getDerivedStateFromProps", props, state);
+                return null
+            }
+
+            // 在更新之前获取快照
+            getSnapshotBeforeUpdate() {
+                console.log("Count---getSnapshotBeforeUpdate");
+                return 'react'
+            }
+
+            // 组件挂载完毕
+            componentDidMount() {
+                console.log("Count---componentDidMount");
+            }
+
+            // 组件将要卸载
+            componentWillUnmount() {
+                console.log("Count---componentWillUnmount");
+            }
+
+            // 控制组件更新的阀门
+            shouldComponentUpdate() {
+                console.log("Count---shouldComponentUpdate");
+                return true
+            }
+
+            // 组件更新完毕
+            componentDidUpdate(preProps, preState, snapshotValue) {
+                console.log("Count---componentDidUpdate", preProps, preState, snapshotValue);
+            }
+
+            render() {
+                console.log("Count---render");
+                const { count } = this.state
+                return (
+                    <div>
+                        <h2>当前求和为：{count}</h2>
+                        <button onClick={this.add}>点我+1</button>
+                        <button onClick={this.death}>卸载</button>
+                        <button onClick={this.force}>不更改任何状态中的数据，强制更新</button>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Count count={199} />, document.getElementById('app'))
+    </script>
+</body>
+
+</html>
