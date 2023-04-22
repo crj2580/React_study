@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 500px;
+        height: 300px;
+        margin: 10px auto;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .carousel {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        transition: 0.5s;
+      }
+
+      .container .carousel img {
+        width: 500px;
+        height: 300px;
+      }
+
+      .indicator {
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .indicator span {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        margin: 0 3px;
+      }
+
+      .indicator span.active {
+        background: #fff;
+        border-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="carousel">
+        <div class="item">
+          <a href="">
+            <img src="./img/1.jpg" alt="" />
+          </a>
+        </div>
+        <div class="item">
+          <a href="">
+            <img src="./img/2.jpg" alt="" />
+          </a>
+        </div>
+        <div class="item">
+          <a href="">
+            <img src="./img/3.jpg" alt="" />
+          </a>
+        </div>
+        <div class="item">
+          <a href="">
+            <img src="./img/4.jpg" alt="" />
+          </a>
+        </div>
+      </div>
+      <div class="indicator">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <script>
+      var doms = {
+        carousel: document.querySelector(".carousel"),
+        indicator: document.querySelectorAll(".indicator span"),
+      };
+
+      /**
+       * 移动轮播图到第几个板块
+       * @param {Number} index 板块的索引
+       */
+      function moveTo(index) {
+        doms.carousel.style.transform = `translateX(-${index}00%)`;
+        var active = document.querySelector(".indicator span.active");
+        active.classList.remove("active");
+        doms.indicator[index].classList.add("active");
+      }
+
+      doms.indicator.forEach(function (item, index) {
+        item.onclick = function () {
+          moveTo(index);
+        };
+      });
+    </script>
+  </body>
+</html>
